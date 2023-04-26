@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,8 +22,12 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
 
+//    @Autowired
+//    private RestTemplate restTemplate;
+
     @Autowired
-    private RestTemplate restTemplate;
+    private WebClient webClient;
+
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -38,8 +43,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ApiClubResponse getEmployee(Long id) {
         Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", id));
-        ResponseEntity<DepartmentDto> responseEntity = this.restTemplate.getForEntity("http://localhost:8080/get-dept-by-code/" + employee.getDeptCode(), DepartmentDto.class);
-        DepartmentDto departmentDto = responseEntity.getBody();
+//        ResponseEntity<DepartmentDto> responseEntity = this.restTemplate.getForEntity("http://localhost:8080/get-dept-by-code/" + employee.getDeptCode(), DepartmentDto.class);
+//        DepartmentDto departmentDto = responseEntity.getBody();
+
+        DepartmentDto departmentDto = webClient.get()
+                .uri("http://localhost:8080/get-dept-by-code/" + employee.getDeptCode())
+                .retrieve()
+                .bodyToMono(DepartmentDto.class)
+                .block();
 
         ApiClubResponse apiClubResponse = ApiClubResponse.builder().ob1(this.modelMapper.map(employee, EmployeeDto.class)).ob2(departmentDto).build();
 
