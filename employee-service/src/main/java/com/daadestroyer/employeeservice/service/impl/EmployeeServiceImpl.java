@@ -6,6 +6,7 @@ import com.daadestroyer.employeeservice.entity.Employee;
 import com.daadestroyer.employeeservice.exceptionhandling.APIResponse;
 import com.daadestroyer.employeeservice.exceptionhandling.ResourceNotFoundException;
 import com.daadestroyer.employeeservice.repository.EmployeeRepository;
+import com.daadestroyer.employeeservice.service.APIClient;
 import com.daadestroyer.employeeservice.service.EmployeeService;
 import com.daadestroyer.employeeservice.util.ApiClubResponse;
 import org.modelmapper.ModelMapper;
@@ -25,8 +26,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 //    @Autowired
 //    private RestTemplate restTemplate;
 
+//    @Autowired
+//    private WebClient webClient;
+
     @Autowired
-    private WebClient webClient;
+    private APIClient apiClient;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -46,11 +50,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 //        ResponseEntity<DepartmentDto> responseEntity = this.restTemplate.getForEntity("http://localhost:8080/get-dept-by-code/" + employee.getDeptCode(), DepartmentDto.class);
 //        DepartmentDto departmentDto = responseEntity.getBody();
 
-        DepartmentDto departmentDto = webClient.get()
-                .uri("http://localhost:8080/get-dept-by-code/" + employee.getDeptCode())
-                .retrieve()
-                .bodyToMono(DepartmentDto.class)
-                .block();
+//        DepartmentDto departmentDto = webClient.get()
+//                .uri("http://localhost:8080/get-dept-by-code/" + employee.getDeptCode())
+//                .retrieve()
+//                .bodyToMono(DepartmentDto.class)
+//                .block();
+
+        DepartmentDto departmentDto = apiClient.getDeptByCode(employee.getDeptCode());
 
         ApiClubResponse apiClubResponse = ApiClubResponse.builder().ob1(this.modelMapper.map(employee, EmployeeDto.class)).ob2(departmentDto).build();
 
