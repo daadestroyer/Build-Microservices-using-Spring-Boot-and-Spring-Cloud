@@ -31,4 +31,6 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    private String deptCode;
+
 }

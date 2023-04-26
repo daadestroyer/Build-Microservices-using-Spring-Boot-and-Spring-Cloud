@@ -3,6 +3,7 @@ package com.daadestroyer.employeeservice.controller;
 
 import com.daadestroyer.employeeservice.dto.EmployeeDto;
 import com.daadestroyer.employeeservice.service.impl.EmployeeServiceImpl;
+import com.daadestroyer.employeeservice.util.ApiClubResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class MainController {
+public class EmployeeController {
 
 
     @Autowired
@@ -33,10 +34,10 @@ public class MainController {
         return new ResponseEntity<>(listOfEmployee, HttpStatus.OK);
     }
 
-    //http://localhost:8081/get-emp/1
+    // http://localhost:8081/get-emp/1
     @GetMapping("/get-emp/{id}")
     public ResponseEntity<?> getEmp(@PathVariable Long id) {
-        EmployeeDto employee = this.employeeServiceImpl.getEmployee(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        ApiClubResponse apiClubResponse = this.employeeServiceImpl.getEmployee(id);
+        return new ResponseEntity<>(apiClubResponse, HttpStatus.OK);
     }
 }
