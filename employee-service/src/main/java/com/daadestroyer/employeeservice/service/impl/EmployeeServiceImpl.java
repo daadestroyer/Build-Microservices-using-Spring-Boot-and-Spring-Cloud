@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ApiClubResponse getEmployee(Long id) {
         Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", id));
-//        ResponseEntity<DepartmentDto> responseEntity = this.restTemplate.getForEntity("http://localhost:8080/get-dept-by-code/" + employee.getDeptCode(), DepartmentDto.class);
+//        ResponseEntity<DepartmentDto> responseEntity = this.restTemplate.getForEntity("http://localhost:8080/api/departments/get-dept-by-code/" + employee.getDeptCode(), DepartmentDto.class);
 //        DepartmentDto departmentDto = responseEntity.getBody();
 
 //        DepartmentDto departmentDto = webClient.get()

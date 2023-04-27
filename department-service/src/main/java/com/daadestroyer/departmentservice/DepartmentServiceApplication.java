@@ -11,7 +11,7 @@ public class DepartmentServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(DepartmentServiceApplication.class, args);
         System.out.println("-------------------------");
-        System.out.println("DEPARTMENT SERVICE - 8082");
+        System.out.println("DEPARTMENT SERVICE - 8080");
         System.out.println("-------------------------");
     }
 
