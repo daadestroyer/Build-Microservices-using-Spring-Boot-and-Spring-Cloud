@@ -58,7 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         DepartmentDto departmentDto = apiClient.getDeptByCode(employee.getDeptCode());
 
-        ApiClubResponse apiClubResponse = ApiClubResponse.builder().ob1(this.modelMapper.map(employee, EmployeeDto.class)).ob2(departmentDto).build();
+        ApiClubResponse apiClubResponse = ApiClubResponse.builder().employeeData(this.modelMapper.map(employee, EmployeeDto.class)).departmentData(departmentDto).build();
 
         return apiClubResponse;
     }

@@ -11,6 +11,6 @@ import lombok.ToString;
 @ToString
 public class ApiClubResponse {
 
-     public Object ob1;
-     public Object ob2;
+     public Object employeeData;
+     public Object departmentData;
 }

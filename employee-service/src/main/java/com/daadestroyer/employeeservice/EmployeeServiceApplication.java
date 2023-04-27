@@ -14,6 +14,9 @@ public class EmployeeServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(EmployeeServiceApplication.class, args);
+        System.out.println("-----------------------");
+        System.out.println("EMPLOYEE SERVICE - 8081");
+        System.out.println("-----------------------");
     }
 
     @Bean
