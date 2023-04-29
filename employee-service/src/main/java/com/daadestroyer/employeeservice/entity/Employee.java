@@ -32,5 +32,6 @@ public class Employee {
     private String email;
 
     private String deptCode;
+    private String orgCode;
 
 }

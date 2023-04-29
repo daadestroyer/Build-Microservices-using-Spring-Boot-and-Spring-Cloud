@@ -13,4 +13,6 @@ public class ApiClubResponse {
 
      public Object employeeData;
      public Object departmentData;
+
+     public Object organizationData;
 }
