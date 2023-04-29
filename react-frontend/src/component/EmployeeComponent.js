@@ -45,7 +45,7 @@ export const EmployeeComponent = () => {
                     {
 
                         ( 
-                           errorData?.isError==false &&
+                           errorData?.isError===false &&
                            <>
                                 <div className='col-md-4'>
                                     <hr />
