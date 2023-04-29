@@ -9,6 +9,7 @@ import com.daadestroyer.employeeservice.repository.EmployeeRepository;
 import com.daadestroyer.employeeservice.service.APIClient;
 import com.daadestroyer.employeeservice.service.EmployeeService;
 import com.daadestroyer.employeeservice.util.ApiClubResponse;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    static int i =0;
 
 //    @Autowired
 //    private RestTemplate restTemplate;
@@ -44,6 +46,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return this.modelMapper.map(savedEmployee, EmployeeDto.class);
     }
 
+
+    @CircuitBreaker(name = "EMPLOYEE-SERVICE", fallbackMethod = "getDefaultDepartment")
     @Override
     public ApiClubResponse getEmployee(Long id) {
         Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", id));
@@ -60,6 +64,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         ApiClubResponse apiClubResponse = ApiClubResponse.builder().employeeData(this.modelMapper.map(employee, EmployeeDto.class)).departmentData(departmentDto).build();
 
+        return apiClubResponse;
+    }
+
+    public ApiClubResponse getDefaultDepartment(Long id,Exception exception) {
+        Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", id));
+        DepartmentDto departmentDto = DepartmentDto.builder().deptCode("default dept").deptDesc("default dept desc").deptName("default dept name").id(1001L).build();
+        ApiClubResponse apiClubResponse = ApiClubResponse.builder().employeeData(this.modelMapper.map(employee, EmployeeDto.class)).departmentData(departmentDto).build();
+        System.out.println("No of call :"+(i++));
         return apiClubResponse;
     }
 
