@@ -14,3 +14,6 @@ and hit the /refresh actuator end point to recieve the latest change in properti
 change and no need to hit /refresh endpoint for each microservice seperatly
 ![spring cloud bus config](https://user-images.githubusercontent.com/48306820/235080045-4b4c7c47-eb0b-48d6-85c9-261cc52b1a05.png)
 
+### added react-frontend with validation checking
+<img width="1440" alt="Screenshot 2023-04-29 at 6 17 17 PM" src="https://user-images.githubusercontent.com/48306820/235303277-927b6b73-4b87-422e-81af-83275247c093.png">
+<img width="1440" alt="Screenshot 2023-04-29 at 6 17 31 PM" src="https://user-images.githubusercontent.com/48306820/235303287-d2a4a08e-7a20-4969-921a-a7d7e922520c.png">
