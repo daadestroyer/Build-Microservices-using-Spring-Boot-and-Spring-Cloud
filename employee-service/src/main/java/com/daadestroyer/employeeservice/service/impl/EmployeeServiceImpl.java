@@ -10,6 +10,7 @@ import com.daadestroyer.employeeservice.service.APIClient;
 import com.daadestroyer.employeeservice.service.EmployeeService;
 import com.daadestroyer.employeeservice.util.ApiClubResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    static int i =0;
+    static int i =1;
 
 //    @Autowired
 //    private RestTemplate restTemplate;
@@ -47,9 +48,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-    @CircuitBreaker(name = "EMPLOYEE-SERVICE", fallbackMethod = "getDefaultDepartment")
+    //@CircuitBreaker(name = "EMPLOYEE-SERVICE", fallbackMethod = "getDefaultDepartment")
+    @Retry(name = "EMPLOYEE-SERVICE",fallbackMethod = "getDefaultDepartment")
     @Override
     public ApiClubResponse getEmployee(Long id) {
+        System.out.println("retry :"+(i++));
         Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", id));
 //        ResponseEntity<DepartmentDto> responseEntity = this.restTemplate.getForEntity("http://localhost:8080/api/departments/get-dept-by-code/" + employee.getDeptCode(), DepartmentDto.class);
 //        DepartmentDto departmentDto = responseEntity.getBody();
@@ -71,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", id));
         DepartmentDto departmentDto = DepartmentDto.builder().deptCode("default dept").deptDesc("default dept desc").deptName("default dept name").id(1001L).build();
         ApiClubResponse apiClubResponse = ApiClubResponse.builder().employeeData(this.modelMapper.map(employee, EmployeeDto.class)).departmentData(departmentDto).build();
-        System.out.println("No of call :"+(i++));
+
         return apiClubResponse;
     }
 
